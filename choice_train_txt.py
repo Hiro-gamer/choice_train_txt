@@ -13,7 +13,7 @@ with open(train_txt_file) as f:
     num = f.read().count('jpg')
 print('number of images:', num)
 
-
+# 説明文の表示
 def text_window():
     text_window_img = np.full((100, 260, 3), 128, dtype=np.uint8)
     cv2.putText(text_window_img, 'F: ADD', (34, 20),
