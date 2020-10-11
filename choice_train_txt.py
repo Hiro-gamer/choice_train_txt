@@ -5,8 +5,8 @@ import re
 import numpy as np
 
 train_txt_file = 'train.txt'
-remove_txt = 'face-data/'
-save_file_name = 'train3.txt'
+remove_txt = ''
+save_file_name = 'train2.txt'
 num = ''
 
 with open(train_txt_file) as f:
