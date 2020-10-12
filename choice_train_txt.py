@@ -1,19 +1,20 @@
-####
-
 import cv2
 import re
 import numpy as np
+import time
+
 
 train_txt_file = 'train.txt'
-remove_txt = ''
-save_file_name = 'train2.txt'
+remove_txt = 'face-data/'
+save_file_name = 'train3.txt'
 num = ''
 
 with open(train_txt_file) as f:
     num = f.read().count('jpg')
 print('number of images:', num)
 
-# 説明文の表示
+
+# 説明用のテキスト画面の生成と表示
 def text_window():
     text_window_img = np.full((100, 260, 3), 128, dtype=np.uint8)
     cv2.putText(text_window_img, 'F: ADD', (34, 20),
@@ -40,6 +41,13 @@ def generator():
     img_paths = []  # 出力する配列
     end_flag = False  # 途中終了フラグ
     i = 0  # 表示する配列の番号
+
+    # 最初に画像用の画面を作って,ウィンドウの位置を調整しておく(ループ内でウィンドウの移動を何回もさせないため)
+    temp_img = np.full((100, 260, 3), 128, dtype=np.uint8)
+    cv2.imshow('now image', temp_img)
+    cv2.moveWindow('now image', 50, 25)
+
+    # 全部の行を読み込ませる
     while i < num:
         # 両端の空白や改行を除去して1行ずつ読み込む
         img_path = temp_paths[i].strip()
@@ -49,7 +57,7 @@ def generator():
         if im.shape[0] >= 950 or im.shape[1] >= 1800:
             im = cv2.resize(im, (int(im.shape[1] * 0.5), int(im.shape[0] * 0.5)))
         cv2.imshow('now image', im)
-        cv2.moveWindow('now image', 50, 25)
+        time.sleep(0.2)  # 長押しで暴発しないため
 
         # 入力を待つ
         while 1:
@@ -79,6 +87,7 @@ def generator():
     # 画像パス一覧を出力
     cv2.destroyAllWindows()
     return img_paths
+
 
 text_window()
 img_paths = generator()
