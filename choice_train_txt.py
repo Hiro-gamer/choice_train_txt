@@ -26,7 +26,7 @@ def text_window():
     cv2.putText(text_window_img, 'ESC: END', (0, 95),
                 cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 0), lineType=cv2.LINE_AA)
     cv2.imshow('Description', text_window_img)
-    cv2.moveWindow('Description', 1580, 25)
+    cv2.moveWindow('Description', 0, 25)
 
 
 def generator():
@@ -45,7 +45,7 @@ def generator():
     # 最初に画像用の画面を作って,ウィンドウの位置を調整しておく(ループ内でウィンドウの移動を何回もさせないため)
     temp_img = np.full((100, 260, 3), 128, dtype=np.uint8)
     cv2.imshow('now image', temp_img)
-    cv2.moveWindow('now image', 50, 25)
+    cv2.moveWindow('now image', 340, 25)
 
     # 全部の行を読み込ませる
     while i < num:
@@ -54,7 +54,7 @@ def generator():
 
         # 画像を読み込み 画像を表示(大きい画像は一旦リサイズ)
         im = cv2.imread(re.sub(remove_txt, '', img_path))
-        if im.shape[0] >= 950 or im.shape[1] >= 1800:
+        if im.shape[0] >= 950 or im.shape[1] >= 1700:
             im = cv2.resize(im, (int(im.shape[1] * 0.5), int(im.shape[0] * 0.5)))
         cv2.imshow('now image', im)
         time.sleep(0.2)  # 長押しで暴発しないため
