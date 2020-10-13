@@ -10,7 +10,6 @@ train_txt_file = 'train.txt'
 remove_txt = 'face-data/'
 save_file_name = 'train3.txt'
 
-
 # 説明用のテキスト画面の生成と表示
 def text_window():
     text_window_img = np.full((125, 260, 3), 128, dtype=np.uint8)
@@ -29,8 +28,8 @@ def text_window():
 
 
 def generator():
-    temp_paths = []
-    num = 0
+    temp_paths = []  # 一時的に画像のアドレスを保存する場所
+    num = 0  # 元のtrain.txtの行数
 
     # 配列に読み込ませる
     print('テキストを読み込んでいます。しばらく待ってください')
@@ -48,7 +47,7 @@ def generator():
     # 一旦読み込んだ配列からそれぞれ取り出して,画像を表示しながら判定する
     img_paths = []  # 出力する配列
     end_flag = False  # 途中終了フラグ
-    save_flag = True
+    save_flag = True  # 保存を判定する
     i = 0  # 表示する配列の番号
     while i < num:  # 全部の行を読み込ませる
         # 両端の空白や改行を除去して1行ずつ読み込む
@@ -96,15 +95,14 @@ def generator():
             break
     # 画像パス一覧を出力
     cv2.destroyAllWindows()
-    return img_paths, save_flag, num
+    return img_paths, save_flag
 
 
 text_window()
-img_paths, save_flag, num = generator()
+img_paths, save_flag= generator()
 
 # trainファイル作成
 if save_flag:
-    train_str = '\n'.join(img_paths)
     with open(save_file_name, 'w') as f:
-        f.write(train_str)
+        f.write('\n'.join(img_paths))
     print('train.txtに追加した数:' + str(len(img_paths)))
