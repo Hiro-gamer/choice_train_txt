@@ -104,8 +104,7 @@ img_paths, save_flag, num = generator()
 
 # trainファイル作成
 if save_flag:
-    train_list = img_paths[:num]
-    train_str = '\n'.join(train_list)
+    train_str = '\n'.join(img_paths)
     with open(save_file_name, 'w') as f:
         f.write(train_str)
     print('train.txtに追加した数:' + str(len(img_paths)))
