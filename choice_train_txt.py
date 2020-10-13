@@ -5,10 +5,10 @@ import re
 import numpy as np
 import time
 
-
 train_txt_file = 'train.txt'
 remove_txt = 'face-data/'
 save_file_name = 'train3.txt'
+
 
 # 説明用のテキスト画面の生成と表示
 def text_window():
@@ -57,7 +57,7 @@ def generator():
         im = cv2.imread(re.sub(remove_txt, '', img_path))
         if im.shape[0] >= 950 or im.shape[1] >= 1700:
             im = cv2.resize(im, (int(im.shape[1] * 0.5), int(im.shape[0] * 0.5)))
-        cv2.putText(im, str(i+1), (0, 12), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), lineType=cv2.LINE_AA)  # 画像番号を出力
+        cv2.putText(im, str(i + 1), (0, 12), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), lineType=cv2.LINE_AA)  # 画像番号を出力
         cv2.imshow('now image', im)
         time.sleep(0.2)  # 長押しで暴発しないため
 
@@ -99,7 +99,7 @@ def generator():
 
 
 text_window()
-img_paths, save_flag= generator()
+img_paths, save_flag = generator()
 
 # trainファイル作成
 if save_flag:
