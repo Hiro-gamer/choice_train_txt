@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import cv2
 import re
@@ -9,11 +9,6 @@ import time
 train_txt_file = 'train.txt'
 remove_txt = 'face-data/'
 save_file_name = 'train3.txt'
-num = ''
-
-with open(train_txt_file) as f:
-    num = f.read().count('jpg')
-print('画像の数:', num)
 
 
 # 説明用のテキスト画面の生成と表示
@@ -35,28 +30,29 @@ def text_window():
 
 def generator():
     temp_paths = []
+    num = 0
 
     # 配列に読み込ませる
     print('テキストを読み込んでいます。しばらく待ってください')
     with open(train_txt_file) as f:
-        for i in range(num):
-            temp_paths.append(f.readline().strip())
-
-    # 一旦読み込んだ配列からそれぞれ取り出して,画像を表示しながら判定する
-    img_paths = []  # 出力する配列
-    end_flag = False  # 途中終了フラグ
-    i = 0  # 表示する配列の番号
+        for line in f:
+            temp_paths.append(line)
+            num += 1
+    print("画像の数:" + str(num))
 
     # 最初に画像用の画面を作って,ウィンドウの位置を調整しておく(ループ内でウィンドウの移動を何回もさせないため)
     temp_img = np.full((100, 260, 3), 128, dtype=np.uint8)
     cv2.imshow('now image', temp_img)
     cv2.moveWindow('now image', 340, 25)
 
-    # 全部の行を読み込ませる
-    while i < num:
+    # 一旦読み込んだ配列からそれぞれ取り出して,画像を表示しながら判定する
+    img_paths = []  # 出力する配列
+    end_flag = False  # 途中終了フラグ
+    save_flag = True
+    i = 0  # 表示する配列の番号
+    while i < num:  # 全部の行を読み込ませる
         # 両端の空白や改行を除去して1行ずつ読み込む
         img_path = temp_paths[i].strip()
-        save_flag = True
 
         # 画像を読み込み 画像を表示(大きい画像は一旦リサイズ)
         im = cv2.imread(re.sub(remove_txt, '', img_path))
@@ -100,11 +96,11 @@ def generator():
             break
     # 画像パス一覧を出力
     cv2.destroyAllWindows()
-    return img_paths, save_flag
+    return img_paths, save_flag, num
 
 
 text_window()
-img_paths, save_flag = generator()
+img_paths, save_flag, num = generator()
 
 # trainファイル作成
 if save_flag:
