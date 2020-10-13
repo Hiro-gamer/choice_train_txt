@@ -16,14 +16,16 @@ print('number of images:', num)
 
 # 説明用のテキスト画面の生成と表示
 def text_window():
-    text_window_img = np.full((100, 260, 3), 128, dtype=np.uint8)
+    text_window_img = np.full((125, 260, 3), 128, dtype=np.uint8)
     cv2.putText(text_window_img, 'F: ADD', (34, 20),
                 cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 0), lineType=cv2.LINE_AA)
-    cv2.putText(text_window_img, 'J: THROUGH', (38, 45),
+    cv2.putText(text_window_img, 'J: THROUGH', (37, 45),
                 cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 0), lineType=cv2.LINE_AA)
     cv2.putText(text_window_img, 'B: BACK(DELETE)', (32, 70),
                 cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 0), lineType=cv2.LINE_AA)
-    cv2.putText(text_window_img, 'ESC: END', (0, 95),
+    cv2.putText(text_window_img, 'Q: END(NO SAVE)', (32, 95),
+                cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 0), lineType=cv2.LINE_AA)
+    cv2.putText(text_window_img, 'ESC: END', (0, 120),
                 cv2.FONT_HERSHEY_COMPLEX, 0.8, (0, 0, 0), lineType=cv2.LINE_AA)
     cv2.imshow('Description', text_window_img)
     cv2.moveWindow('Description', 0, 25)
