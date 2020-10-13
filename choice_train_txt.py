@@ -33,6 +33,7 @@ def generator():
     temp_paths = []
 
     # 配列に読み込ませる
+    print('テキストを読み込んでいます。しばらく待ってください')
     with open(train_txt_file) as f:
         for i in range(num):
             temp_paths.append(f.readline().strip())
