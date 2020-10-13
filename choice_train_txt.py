@@ -52,6 +52,7 @@ def generator():
     while i < num:
         # 両端の空白や改行を除去して1行ずつ読み込む
         img_path = temp_paths[i].strip()
+        save_flag = True
 
         # 画像を読み込み 画像を表示(大きい画像は一旦リサイズ)
         im = cv2.imread(re.sub(remove_txt, '', img_path))
@@ -77,24 +78,32 @@ def generator():
                     img_paths.pop()
                 i -= 1
                 break
+            elif key == ord('q'):  # 保存をセずに終了
+                end_flag = True
+                save_flag = False
+                break
             elif key == 27:  # escの入力で途中終了
                 end_flag = True
                 break
             else:
                 print('キー入力が正しくありません')
         if end_flag:
-            print('途中で終了します.途中までの結果は保存されます')
+            if save_flag:
+                print('途中で終了します.途中までの結果は保存しました.')
+            else:
+                print('途中で終了します.途中までの結果は保存しませんでした.')
             break
     # 画像パス一覧を出力
     cv2.destroyAllWindows()
-    return img_paths
+    return img_paths, save_flag
 
 
 text_window()
-img_paths = generator()
+img_paths, save_flag = generator()
 
 # trainファイル作成
-train_list = img_paths[:num]
-train_str = '\n'.join(train_list)
-with open(save_file_name, 'w') as f:
-    f.write(train_str)
+if save_flag:
+    train_list = img_paths[:num]
+    train_str = '\n'.join(train_list)
+    with open(save_file_name, 'w') as f:
+        f.write(train_str)
