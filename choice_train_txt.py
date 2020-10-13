@@ -11,7 +11,7 @@ num = ''
 
 with open(train_txt_file) as f:
     num = f.read().count('jpg')
-print('number of images:', num)
+print('画像の数:', num)
 
 
 # 説明用のテキスト画面の生成と表示
@@ -60,6 +60,7 @@ def generator():
         im = cv2.imread(re.sub(remove_txt, '', img_path))
         if im.shape[0] >= 950 or im.shape[1] >= 1700:
             im = cv2.resize(im, (int(im.shape[1] * 0.5), int(im.shape[0] * 0.5)))
+        cv2.putText(im, str(i+1), (0, 12), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), lineType=cv2.LINE_AA)  # 画像番号を出力
         cv2.imshow('now image', im)
         time.sleep(0.2)  # 長押しで暴発しないため
 
@@ -109,3 +110,4 @@ if save_flag:
     train_str = '\n'.join(train_list)
     with open(save_file_name, 'w') as f:
         f.write(train_str)
+    print('train.txtに追加した数:' + str(len(img_paths)))
